@@ -1,0 +1,709 @@
+{
+	"info": {
+		"_postman_id": "02f10432-530e-4632-83fb-9b8b9c4decc9",
+		"name": "Homein api with Auth0 OAuth2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "auth0 /oauth/token",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "audience",
+							"value": "{{audience}}",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "client_credentials",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "{{clientId}}",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "{{clientSecret}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{auth}}",
+					"host": [
+						"{{auth}}"
+					]
+				},
+				"description": "Call this Auth0 api with client credentials to receive Access token."
+			},
+			"response": []
+		},
+		{
+			"name": "homeinapi/v1/customers",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"HomeLoanNumber\": \"15177471101\",\r\n    \"FirstName\": \"testone\",\r\n    \"EmailId\": \"dt3hm10@yopmail.com\",\r\n    \"LastName\": \"lastone\",\r\n    \"LenderId\": \"Jiewen.Niu@cba.com.au\",\r\n    \"MobileNumber\": \"+61401151136\",    \r\n    \"DateOfBirth\": \"20010101\",\r\n    \"FinancialInstitution\":\"CBA\"\r\n}"
+				},
+				"url": {
+					"raw": "{{onBoardAPI}}",
+					"host": [
+						"{{onBoardAPI}}"
+					]
+				},
+				"description": "Call this Pega Homein api with the access token received from Auth0 /token call.\nThis will create a customer in Pega Homein app and returns password reset url if succeful."
+			},
+			"response": []
+		},
+		{
+			"name": "homeinapi/v1/customers No Access token",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"HomeLoanNumber\": \"12345678951\",\r\n    \"FirstName\": \"testone\",\r\n    \"EmailId\": \"testcustapi51@yopmail.com\",\r\n    \"LastName\": \"lastone\",\r\n    \"LenderId\": \"Jiewen.Niu@cba.com.au\",\r\n    \"MobileNumber\": \"+61488888888\",    \r\n    \"DateOfBirth\": \"20010101\",\r\n    \"FinancialInstitution\":\"CBA\"\r\n}"
+				},
+				"url": {
+					"raw": "{{onBoardAPI}}",
+					"host": [
+						"{{onBoardAPI}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "homeinapi/v1/customers INVALID ACCESS TOKEN",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ik1VUTJNRFJDTmpjeU1VTTVPVUk0UlRGRVJFWkVhLWR0MS5wZWdhY2xvdWQuaW8vcHJ3ZWIvUFJSZXN0U2VydmljZS9ob21laW5hcGkvdjEvY3VzdG9tZXJzIiwiaWF0IjoxNjI0NDkyNzU1LCJleHAiOjE2MjQ1NzkxNTUsImF6cCI6IjRNRDJRNENISDV6SWhPTFd5UEp5RW9RQkZGb1NhWlZPIiwic2NvcGUiOiJjcmVhdGU6Y3VzdG9tZXJzIiwiZ3R5IjoiY2xpZW50LWNyZWRlbnRpYWxzIn0.T4g83QEcRVN0P9mrfgj-dnqoET6GhrEx3U-StvjnmHkiG9MZ5XWtBFLtgIdV5HI80_2mtN6YLLms8ZDSJqrF8UbV5lOkc3LcfCE_LnRNUr3u_YEiv_Bdooa7IUVb7HH0BbZAENUzHY6jAUiA1xBvr95NUododl9fXHZHjr651cfx77r2rrgzZPFsOqDz7OoE7ip6j54PF4PiA0GhyD1l8o3m6U-Rt2ho2H5RqFEM9ZnjitPmqu46XJQ2QSVp8Xb8liZq4APNmdc1C36Llrb2EFa4ubgalt-N8tsTvaRkwlv5c0hWpDjLmG9uaVMvMGkxGjYnZ79nS-ak_lLyQnsVIg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"HomeLoanNumber\": \"12345678951\",\r\n    \"FirstName\": \"testone\",\r\n    \"EmailId\": \"testcustapi51@yopmail.com\",\r\n    \"LastName\": \"lastone\",\r\n    \"LenderId\": \"Jiewen.Niu@cba.com.au\",\r\n    \"MobileNumber\": \"+61488888888\",    \r\n    \"DateOfBirth\": \"20010101\",\r\n    \"FinancialInstitution\":\"CBA\"\r\n}"
+				},
+				"url": {
+					"raw": "https://cba-dt1.pegacloud.io/prweb/PRRestService/homeinapi/v1/customers",
+					"protocol": "https",
+					"host": [
+						"cba-dt1",
+						"pegacloud",
+						"io"
+					],
+					"path": [
+						"prweb",
+						"PRRestService",
+						"homeinapi",
+						"v1",
+						"customers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "homeinapi/v1/customers 400 Bad request",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "testing\r\n    \"CHLNumber\": \"12345678939\",\r\n    \"FirstName\": \"testone\",\r\n    \"EmailId\": \"testcustapi39@yopmail.com\",\r\n    \"LastName\": \"lastone\",\r\n    \"LenderId\": \"Jiewen.Niu@cba.com.au\",\r\n    \"MobileNumber\": \"+61488888888\",\r\n    \"Channel\": \"API\",\r\n    \"DateOfBirth\":\"20000101\"\r\n    \"hello\""
+				},
+				"url": {
+					"raw": "{{onBoardAPI}}",
+					"host": [
+						"{{onBoardAPI}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "homeinapi/v1/customers 400 Missing Critical data",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"HomeLoanNumber\": \"12345678945\",\r\n    \"FirstName\": \"testone\",    \r\n    \"LastName\": \"lastone\",\r\n    \"LenderId\": \"Jiewen.Niu@cba.com.au\",    \r\n    \"DateOfBirth\": \"20010101\"\r\n}"
+				},
+				"url": {
+					"raw": "https://cba-dt1.pegacloud.io/prweb/PRRestService/homeinapi/v1/customers",
+					"protocol": "https",
+					"host": [
+						"cba-dt1",
+						"pegacloud",
+						"io"
+					],
+					"path": [
+						"prweb",
+						"PRRestService",
+						"homeinapi",
+						"v1",
+						"customers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "homeinapi/v1/customers DUPLICATE Customer (both email & HomelloanNUMBER)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"HomeLoanNumber\": \"12345678937\",\r\n    \"FirstName\": \"testone\",\r\n    \"EmailId\": \"testcustapi38@yopmail.com\",\r\n    \"LastName\": \"lastone\",\r\n    \"LenderId\": \"Jiewen.Niu@cba.com.au\",\r\n    \"MobileNumber\": \"+61488888888\"    \r\n}"
+				},
+				"url": {
+					"raw": "https://cba-dt1.pegacloud.io/prweb/PRRestService/homeinapi/v1/customers",
+					"protocol": "https",
+					"host": [
+						"cba-dt1",
+						"pegacloud",
+						"io"
+					],
+					"path": [
+						"prweb",
+						"PRRestService",
+						"homeinapi",
+						"v1",
+						"customers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "homeinapi/v1/customers DUPLICATe customer with new home loan",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"HomeLoanNumber\": \"12345679937\",\r\n    \"FirstName\": \"testone\",\r\n    \"EmailId\": \"testcustapi37@yopmail.com\",\r\n    \"LastName\": \"lastone\",\r\n    \"LenderId\": \"Jiewen.Niu@cba.com.au\",\r\n    \"MobileNumber\": \"+61488888888\"    \r\n}"
+				},
+				"url": {
+					"raw": "https://cba-dt1.pegacloud.io/prweb/PRRestService/homeinapi/v1/customers",
+					"protocol": "https",
+					"host": [
+						"cba-dt1",
+						"pegacloud",
+						"io"
+					],
+					"path": [
+						"prweb",
+						"PRRestService",
+						"homeinapi",
+						"v1",
+						"customers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "homeinapi/v1/customers Duplicate HLN purchasing partner",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"HomeLoanNumber\": \"12345678937\",\r\n    \"FirstName\": \"testone\",\r\n    \"EmailId\": \"testcustapipp37@yopmail.com\",\r\n    \"LastName\": \"lastone\",\r\n    \"LenderId\": \"Jiewen.Niu@cba.com.au\",\r\n    \"MobileNumber\": \"+61488888888\"    \r\n}"
+				},
+				"url": {
+					"raw": "https://cba-dt1.pegacloud.io/prweb/PRRestService/homeinapi/v1/customers",
+					"protocol": "https",
+					"host": [
+						"cba-dt1",
+						"pegacloud",
+						"io"
+					],
+					"path": [
+						"prweb",
+						"PRRestService",
+						"homeinapi",
+						"v1",
+						"customers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "homeinapi/v1/customers FIRSTNAME_NULL",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"HomeLoanNumber\": \"12345678951\",\r\n    \"EmailId\": \"testcustapi51@yopmail.com\",\r\n    \"LastName\": \"lastone\",\r\n    \"LenderId\": \"Jiewen.Niu@cba.com.au\",\r\n    \"MobileNumber\": \"+61488888888\",    \r\n    \"DateOfBirth\": \"20010101\",\r\n    \"FinancialInstitution\":\"CBA\"\r\n}"
+				},
+				"url": {
+					"raw": "https://cba-dt1.pegacloud.io/prweb/PRRestService/homeinapi/v1/customers",
+					"protocol": "https",
+					"host": [
+						"cba-dt1",
+						"pegacloud",
+						"io"
+					],
+					"path": [
+						"prweb",
+						"PRRestService",
+						"homeinapi",
+						"v1",
+						"customers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "homeinapi/v1/customers LASTNAME_NULL",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"HomeLoanNumber\": \"12345678951\",\r\n    \"FirstName\": \"testone\",\r\n    \"EmailId\": \"testcustapi51@yopmail.com\",    \r\n    \"LenderId\": \"Jiewen.Niu@cba.com.au\",\r\n    \"MobileNumber\": \"+61488888888\",    \r\n    \"DateOfBirth\": \"20010101\",\r\n    \"FinancialInstitution\":\"CBA\"\r\n}"
+				},
+				"url": {
+					"raw": "https://cba-dt1.pegacloud.io/prweb/PRRestService/homeinapi/v1/customers",
+					"protocol": "https",
+					"host": [
+						"cba-dt1",
+						"pegacloud",
+						"io"
+					],
+					"path": [
+						"prweb",
+						"PRRestService",
+						"homeinapi",
+						"v1",
+						"customers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "homeinapi/v1/customers CHLNUMBER_NULL",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"FirstName\": \"testone\",\r\n    \"EmailId\": \"testcustapi51@yopmail.com\",\r\n    \"LastName\": \"lastone\",\r\n    \"LenderId\": \"Jiewen.Niu@cba.com.au\",\r\n    \"MobileNumber\": \"+61488888888\",    \r\n    \"DateOfBirth\": \"20010101\",\r\n    \"FinancialInstitution\":\"CBA\"\r\n}"
+				},
+				"url": {
+					"raw": "https://cba-dt1.pegacloud.io/prweb/PRRestService/homeinapi/v1/customers",
+					"protocol": "https",
+					"host": [
+						"cba-dt1",
+						"pegacloud",
+						"io"
+					],
+					"path": [
+						"prweb",
+						"PRRestService",
+						"homeinapi",
+						"v1",
+						"customers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "homeinapi/v1/customers EMAIL_ID_NULL",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"HomeLoanNumber\": \"12345678951\",\r\n    \"FirstName\": \"testone\",\r\n     \"LastName\": \"lastone\",\r\n    \"LenderId\": \"Jiewen.Niu@cba.com.au\",\r\n    \"MobileNumber\": \"+61488888888\",    \r\n    \"DateOfBirth\": \"20010101\",\r\n    \"FinancialInstitution\":\"CBA\"\r\n}"
+				},
+				"url": {
+					"raw": "https://cba-dt1.pegacloud.io/prweb/PRRestService/homeinapi/v1/customers",
+					"protocol": "https",
+					"host": [
+						"cba-dt1",
+						"pegacloud",
+						"io"
+					],
+					"path": [
+						"prweb",
+						"PRRestService",
+						"homeinapi",
+						"v1",
+						"customers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "homeinapi/v1/customers MOBILENUM_NULL",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"HomeLoanNumber\": \"12345678951\",\r\n    \"FirstName\": \"testone\",\r\n    \"EmailId\": \"testcustapi51@yopmail.com\",\r\n    \"LastName\": \"lastone\",\r\n    \"LenderId\": \"Jiewen.Niu@cba.com.au\",    \r\n    \"DateOfBirth\": \"20010101\",\r\n    \"FinancialInstitution\":\"CBA\"\r\n}"
+				},
+				"url": {
+					"raw": "https://cba-dt1.pegacloud.io/prweb/PRRestService/homeinapi/v1/customers",
+					"protocol": "https",
+					"host": [
+						"cba-dt1",
+						"pegacloud",
+						"io"
+					],
+					"path": [
+						"prweb",
+						"PRRestService",
+						"homeinapi",
+						"v1",
+						"customers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "homeinapi/v1/customers LENDERID_NULL",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"HomeLoanNumber\": \"12345688951\",\r\n    \"FirstName\": \"testone\",\r\n    \"EmailId\": \"testcustapi71@yopmail.com\",\r\n    \"LastName\": \"lastone\",    \r\n    \"MobileNumber\": \"+61488888888\",    \r\n    \"DateOfBirth\": \"20010101\",\r\n    \"FinancialInstitution\":\"CBA\"\r\n}"
+				},
+				"url": {
+					"raw": "https://cba-dt1.pegacloud.io/prweb/PRRestService/homeinapi/v1/customers",
+					"protocol": "https",
+					"host": [
+						"cba-dt1",
+						"pegacloud",
+						"io"
+					],
+					"path": [
+						"prweb",
+						"PRRestService",
+						"homeinapi",
+						"v1",
+						"customers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "homeinapi/v1/customers INVALID_FIRSTNAME",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"HomeLoanNumber\": \"12345678951\",\r\n    \"FirstName\": \"test100\",\r\n    \"EmailId\": \"testcustapi51@yopmail.com\",\r\n    \"LastName\": \"lastone\",\r\n    \"LenderId\": \"Jiewen.Niu@cba.com.au\",\r\n    \"MobileNumber\": \"+61488888888\",    \r\n    \"DateOfBirth\": \"20010101\",\r\n    \"FinancialInstitution\":\"CBA\"\r\n}"
+				},
+				"url": {
+					"raw": "https://cba-dt1.pegacloud.io/prweb/PRRestService/homeinapi/v1/customers",
+					"protocol": "https",
+					"host": [
+						"cba-dt1",
+						"pegacloud",
+						"io"
+					],
+					"path": [
+						"prweb",
+						"PRRestService",
+						"homeinapi",
+						"v1",
+						"customers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "homeinapi/v1/customers INVALID_LASTNAME",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"HomeLoanNumber\": \"12345678951\",\r\n    \"FirstName\": \"testone\",\r\n    \"EmailId\": \"testcustapi51@yopmail.com\",\r\n    \"LastName\": \"lastone001\",\r\n    \"LenderId\": \"Jiewen.Niu@cba.com.au\",\r\n    \"MobileNumber\": \"+61488888888\",    \r\n    \"DateOfBirth\": \"20010101\",\r\n    \"FinancialInstitution\":\"CBA\"\r\n}"
+				},
+				"url": {
+					"raw": "{{onBoardAPI}}",
+					"host": [
+						"{{onBoardAPI}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "homeinapi/v1/customers INVALID_CHLNUMBER",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"HomeLoanNumber\": \"inva;id\",\r\n    \"FirstName\": \"testone\",\r\n    \"EmailId\": \"testcustapi51@yopmail.com\",\r\n    \"LastName\": \"lastone\",\r\n    \"LenderId\": \"Jiewen.Niu@cba.com.au\",\r\n    \"MobileNumber\": \"+61488888888\",    \r\n    \"DateOfBirth\": \"20010101\",\r\n    \"FinancialInstitution\":\"CBA\"\r\n}"
+				},
+				"url": {
+					"raw": "{{onBoardAPI}}",
+					"host": [
+						"{{onBoardAPI}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "homeinapi/v1/customers INVALID_EMAIL",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"HomeLoanNumber\": \"12345678951\",\r\n    \"FirstName\": \"testone\",\r\n    \"EmailId\": \"testcusta.com\",\r\n    \"LastName\": \"lastone\",\r\n    \"LenderId\": \"Jiewen.Niu@cba.com.au\",\r\n    \"MobileNumber\": \"+61488888888\",    \r\n    \"DateOfBirth\": \"20010101\",\r\n    \"FinancialInstitution\":\"CBA\"\r\n}"
+				},
+				"url": {
+					"raw": "{{onBoardAPI}}",
+					"host": [
+						"{{onBoardAPI}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "homeinapi/v1/customers INVALID_MOBILENUM",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"HomeLoanNumber\": \"12345678951\",\r\n    \"FirstName\": \"testone\",\r\n    \"EmailId\": \"testcustapi51@yopmail.com\",\r\n    \"LastName\": \"lastone\",\r\n    \"LenderId\": \"Jiewen.Niu@cba.com.au\",\r\n    \"MobileNumber\": \"+123\",    \r\n    \"DateOfBirth\": \"20010101\",\r\n    \"FinancialInstitution\":\"CBA\"\r\n}"
+				},
+				"url": {
+					"raw": "{{onBoardAPI}}",
+					"host": [
+						"{{onBoardAPI}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "homeinapi/v1/customers INVALID_LENDERID",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"HomeLoanNumber\": \"12345678951\",\r\n    \"FirstName\": \"testone\",\r\n    \"EmailId\": \"testcustapi51@yopmail.com\",\r\n    \"LastName\": \"lastone\",\r\n    \"LenderId\": \"invalid\",\r\n    \"MobileNumber\": \"+61488888888\",    \r\n    \"DateOfBirth\": \"20010101\",\r\n    \"FinancialInstitution\":\"CBA\"\r\n}"
+				},
+				"url": {
+					"raw": "{{onBoardAPI}}",
+					"host": [
+						"{{onBoardAPI}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "homeinapi/v1/customer Duplicate CHL",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"HomeLoanNumber\": \"15177471101\",\r\n    \"FirstName\": \"testone\",\r\n    \"EmailId\": \"dt3hm10@yopmail.com\",\r\n    \"LastName\": \"lastone\",\r\n    \"LenderId\": \"Jiewen.Niu@cba.com.au\",\r\n    \"MobileNumber\": \"+61401151136\",    \r\n    \"DateOfBirth\": \"20010101\",\r\n    \"FinancialInstitution\":\"CBA\"\r\n}"
+				},
+				"url": {
+					"raw": "{{onBoardAPI}}",
+					"host": [
+						"{{onBoardAPI}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "homeinapi/v1/customers INVALID_DOB",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"HomeLoanNumber\": \"15177401101\",\r\n    \"FirstName\": \"testone\",\r\n    \"EmailId\": \"dt3hm12@yopmail.com\",\r\n    \"LastName\": \"lastone\",\r\n    \"LenderId\": \"Jiewen.Niu@cba.com.au\",\r\n    \"MobileNumber\": \"+61401151136\",    \r\n    \"DateOfBirth\": \"200101\",\r\n    \"FinancialInstitution\":\"CBA\"\r\n}"
+				},
+				"url": {
+					"raw": "{{onBoardAPI}}",
+					"host": [
+						"{{onBoardAPI}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ik1VUTJNRFJDTmpjeU1VTTVPVUk0UlRGRVJFWkVOekl6T1VNNVFURTVRVFE1UTBZMk4wWkJSQSJ9.eyJpc3MiOiJodHRwczovL29obWJpLWRldi5hdS5hdXRoMC5jb20vIiwic3ViIjoiNE1EMlE0Q0hINXpJaE9MV3lQSnlFb1FCRkZvU2FaVk9AY2xpZW50cyIsImF1ZCI6Imh0dHBzOi8vY2JhLWR0MS5wZWdhY2xvdWQuaW8vcHJ3ZWIvUFJSZXN0U2VydmljZS9ob21laW5hcGkvdjEvY3VzdG9tZXJzIiwiaWF0IjoxNjI1NzAzMjk3LCJleHAiOjE2MjU3ODk2OTcsImF6cCI6IjRNRDJRNENISDV6SWhPTFd5UEp5RW9RQkZGb1NhWlZPIiwic2NvcGUiOiJjcmVhdGU6Y3VzdG9tZXJzIiwiZ3R5IjoiY2xpZW50LWNyZWRlbnRpYWxzIn0.bRbGOLne6tkVYIO6VqI5xo6trKKIR8NOZX120QcRH4aLyfIwEOzMQKmAW2w_zZaEHhGdbaKPkz9qtWesewd-acOH5-L2z4GbJQeDY_cyKuKD6Ngcc1STohGjnTtZIB7wycnKjw-anIwgFviKga3TNkThtH-HEBCjt8_aAH3nG2LSrx-qP3bdZGXnvaMVCuoqyehcuji8uwNDfe73qc8Ms6ooj15Z4EopC0i5G6WhcmP9ymB2X06A212HvjGmyXu63v2RPKBzD2d6C38ycjs-NzdtCcZlv2ZVRmp26Cb_NxptA-VOdh8CONqeZZMWIcYgLakNxUUN7nAI5mfMlQoutg",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
